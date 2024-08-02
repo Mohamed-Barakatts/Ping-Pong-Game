@@ -27,8 +27,8 @@ class Ball(turtle.Turtle):
         self.shape("circle")
         self.color("white")
         self.penup()
-        self.dx = 1.5  # Lower speed
-        self.dy = 1.5  # Lower speed
+        self.dx = 1  # Lower speed
+        self.dy = 1  # Lower speed
 
     def move(self):
         self.setx(self.xcor() + self.dx)
