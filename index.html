@@ -2,143 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ping Pong Game</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
 </head>
+<style>
+    @import url('httpsL//fonts.googleapis.com/css2?family=Poppins&display=swap');
+    * {
+        font-family: 'Poppins', sans-serif;
+    }
+    body {
+        background: url('background.jpg');
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+        position: fixed;
+        width: 100%;
+        color: white;
+        background-size: cover;
+    }
+</style>
 <body>
-    <script>
-        let paddle1, paddle2, ball;
-        let score1 = 0;
-        let score2 = 0;
-
-        function setup() {
-            createCanvas(windowWidth, windowHeight);
-            paddle1 = new Paddle(30, 'red');
-            paddle2 = new Paddle(width - 40, 'blue');
-            ball = new Ball();
-        }
-
-        function draw() {
-            background(0);
-
-            // Center line
-            stroke(255, 255, 0);
-            strokeWeight(2);
-            for (let i = 0; i < height; i += 40) {
-                line(width / 2, i, width / 2, i + 20);
-            }
-
-            // Display scores
-            textSize(32);
-            fill(255, 255, 0);
-            text(`Player 1: ${score1}`, width / 4 - 100, 50);
-            text(`Player 2: ${score2}`, 3 * width / 4 - 100, 50);
-
-            paddle1.display();
-            paddle2.display();
-            paddle1.update();
-            paddle2.update();
-            ball.display();
-            ball.update();
-            ball.checkPaddle(paddle1);
-            ball.checkPaddle(paddle2);
-
-            // Scoring
-            if (ball.x > width) {
-                score1++;
-                ball.reset();
-            } else if (ball.x < 0) {
-                score2++;
-                ball.reset();
-            }
-        }
-
-        function keyPressed() {
-            if (key === 'w') {
-                paddle1.move(-10);
-            } else if (key === 's') {
-                paddle1.move(10);
-            } else if (keyCode === UP_ARROW) {
-                paddle2.move(-10);
-            } else if (keyCode === DOWN_ARROW) {
-                paddle2.move(10);
-            }
-        }
-
-        function keyReleased() {
-            if (key === 'w' || key === 's') {
-                paddle1.move(0);
-            } else if (keyCode === UP_ARROW || keyCode === DOWN_ARROW) {
-                paddle2.move(0);
-            }
-        }
-
-        class Paddle {
-            constructor(x, color) {
-                this.x = x;
-                this.y = height / 2;
-                this.width = 10;
-                this.height = 100;
-                this.ySpeed = 0;
-                this.color = color;
-            }
-
-            display() {
-                fill(this.color);
-                rect(this.x, this.y, this.width, this.height);
-            }
-
-            update() {
-                this.y += this.ySpeed;
-                this.y = constrain(this.y, 0, height - this.height);
-            }
-
-            move(speed) {
-                this.ySpeed = speed;
-            }
-        }
-
-        class Ball {
-            constructor() {
-                this.reset();
-            }
-
-            display() {
-                fill(255);
-                ellipse(this.x, this.y, this.radius * 2);
-            }
-
-            update() {
-                this.x += this.xSpeed;
-                this.y += this.ySpeed;
-
-                if (this.y < 0 || this.y > height) {
-                    this.ySpeed *= -1;
-                }
-            }
-
-            checkPaddle(paddle) {
-                if (this.x > paddle.x && this.x < paddle.x + paddle.width &&
-                    this.y > paddle.y && this.y < paddle.y + paddle.height) {
-                    this.xSpeed *= -1;
-                }
-            }
-
-            reset() {
-                this.x = width / 2;
-                this.y = height / 2;
-                this.xSpeed = random([-5, 5]);
-                this.ySpeed = random([-3, 3]);
-                this.radius = 12;
-            }
-        }
-
-        function windowResized() {
-            resizeCanvas(windowWidth, windowHeight);
-            paddle1.y = height / 2;
-            paddle2.y = height / 2;
-        }
-    </script>
+    <h1>Ping Pong Game</h1>
+    <canvas></canvas>
+    <p>Control the left player by using up and down arrow keys</p>
+    <script src="./script.js"></script>
 </body>
 </html>
